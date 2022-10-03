@@ -1,22 +1,20 @@
 import logo from "./assets/img/logo.png";
 import setaVirar from "./assets/img/seta_virar.png";
 import styled from 'styled-components';
-import deck from "./DeckDePerguntas";
+import decks from "./deckDePerguntas";
 import React, { useState } from 'react';
+import ImprimirPerguntasFechadas from "./components/ImprimirPerguntasFechadas";
+import ContainerBotoes from "./components/ContainerBotoes";
 
 export default function ScreenContainer() {
 
-    const [clicadas, setClicadas] = useState([]);
-    const [pergunta, setPergunta] = useState("fechada")
+    const [perguntasClicadas, setPerguntasClicadas] = useState([]);
 
-    function mudarPergunta(perguntaClicada){
-        console.log(perguntaClicada)
-        perguntaClicada.status = true
+    const [naoLembradas, setNaoLembradas] = useState([])
 
-        const newClicadas = [...clicadas, perguntaClicada]
+    const [quaseNaoLembradas, setQuaseNaoLembradas] = useState([])
 
-        setClicadas(newClicadas)
-    }
+    const [zap, setZap] = useState([])
 
     return (
 
@@ -27,30 +25,38 @@ export default function ScreenContainer() {
                     <h1>ZapRecall</h1>
                 </div>
 
-                {deck.map((questao, index) =>
-                    <div className={`${clicadas.includes(questao)? "pergunta-aberta": "pergunta-fechada"}`} key={index} onClick={() => mudarPergunta(questao)}>
-                        <p>{`${clicadas.includes(questao)? questao.pergunta : "Pergunta "+ parseInt(index+1)}`}</p>
-                        <ion-icon opacidade={clicadas.includes(questao)} name="play-outline"></ion-icon>
-                    </div>
-                )}
+                <ImprimirPerguntasFechadas 
+                setPerguntasClicadas={setPerguntasClicadas}
+                perguntasClicadas={perguntasClicadas}
+                decks={decks} 
+                naoLembradas={naoLembradas}
+                quaseNaoLembradas={quaseNaoLembradas}
+                zap={zap}
+                />
 
                 <div className="pergunta-aberta">
                     <h1>O que é JSX?</h1>
                     <img src={setaVirar} />
                 </div>
 
-                <Footer>
-                    <Botoes>
-                        <button className="nao-lembrei">Não lembrei</button>
-                        <button className="quase-nao-lembrei">Quase não lembrei</button>
-                        <button className="zap">Zap!</button>
-                    </Botoes>
-                    <h1>0/4 CONCLUÍDOS</h1>
-                </Footer>
+                <ContainerBotoes 
+                perguntasClicadas={perguntasClicadas} 
+                naoLembradas={naoLembradas}
+                setNaoLembradas={setNaoLembradas}
+                quaseNaoLembradas={quaseNaoLembradas}
+                setQuaseNaoLembradas={setQuaseNaoLembradas}
+                zap={zap}
+                setZap={setZap}
+                />
             </Container>
+            
         </>
     )
 }
+
+
+
+
 
 const Container = styled.div`
 
@@ -87,32 +93,7 @@ const Container = styled.div`
         margin-left: 20px;
     }
 
-    .pergunta-fechada {
-        width: 300px;
-        height: 35px;
-        background-color: #FFFFFF;
-        margin: 12px;
-        padding: 15px;
-        box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.15);
-        border-radius: 5px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
 
-        p {
-        font-family: 'Recursive';
-        font-style: normal;
-        font-weight: 700;
-        font-size: 16px;
-        line-height: 19px;
-        color: #333333;
-        }
-
-        ion-icon{
-            font-size: 21.5px;
-            opacity: ${props => props.opacidade ? 0 : 1}
-        }
-    }
     .pergunta-aberta {
         background-color: #FFFFD4;
         width: 300px;
@@ -138,63 +119,9 @@ const Container = styled.div`
             bottom: 10px;
             right: 10px;
         }
+        ion-icon {
+            display: ${props => props.estaAberto? "inline": "none"};
+        }
     }
 `;
 
-const Footer = styled.div`
-  width: 100%;
-  min-height: 50px;
-  background-color: #FFFFFF;
-  position: fixed;
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  padding: 10px;
-  h1 {
-    padding-bottom: 13px;
-    font-family: 'Recursive';
-    font-weight: 400;
-    font-size: 18px;
-    color: #333333;
-  }
-`;
-
-const Botoes = styled.div`
-  display: flex;
-  width: 80%;
-  justify-content: space-between;
-  margin: 20px;
-
-  button {
-    width: 90px;
-    font-family: 'Recursive';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: #FFFFFF;
-    background: blue;
-    border-radius: 5px;
-    border: 1px solid blue;
-    padding:5px;
-  }
-  .nao-lembrei {
-        background: #FF3030;
-        border: 1px solid #FF3030;
-    }
-    .quase-nao-lembrei {
-        background: #FF922E;
-        border: 1px solid #FF922E;
-    }
-    .zap {
-        background: #2FBE34;
-        border: 1px solid #2FBE34;
-    }
-`;
