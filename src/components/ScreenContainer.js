@@ -1,9 +1,9 @@
-import logo from "./assets/img/logo.png";
+import logo from "../assets/img/logo.png";
 import styled from 'styled-components';
-import decks from "./deckDePerguntas";
+import decks from "../deckDePerguntas";
 import React, { useState } from 'react';
-import ImprimirPerguntasFechadas from "./components/ImprimirPerguntasFechadas";
-import ContainerBotoes from "./components/ContainerBotoes";
+import ImprimirPerguntasFechadas from "./ImprimirPerguntasFechadas";
+import ContainerBotoes from "./ContainerBotoes";
 
 export default function ScreenContainer() {
 
@@ -28,9 +28,6 @@ export default function ScreenContainer() {
                 setPerguntasClicadas={setPerguntasClicadas}
                 perguntasClicadas={perguntasClicadas}
                 decks={decks} 
-                naoLembradas={naoLembradas}
-                quaseNaoLembradas={quaseNaoLembradas}
-                zap={zap}
                 />
 
                 <ContainerBotoes 

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import cores from '../coresBotoes.js'
-const { verde, amarelo, vermelho, cinza } = cores
+const { verde, amarelo, vermelho} = cores
 
 export default function ContainerBotoes
   ({

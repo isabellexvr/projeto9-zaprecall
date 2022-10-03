@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import setaVirar from "../assets/img/seta_virar.png";
-import cores from '../coresBotoes.js'
-const { verde, amarelo, vermelho, cinza } = cores
 
-export default function ImprimirPerguntas({ decks, perguntasClicadas, setPerguntasClicadas, naoLembradas, quaseNaoLembradas, zap }) {
+
+export default function ImprimirPerguntas({ decks, perguntasClicadas, setPerguntasClicadas}) {
 
     const [texto, setTexto] = useState()
 
