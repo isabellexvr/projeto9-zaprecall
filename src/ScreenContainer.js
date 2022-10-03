@@ -1,5 +1,4 @@
 import logo from "./assets/img/logo.png";
-import setaVirar from "./assets/img/seta_virar.png";
 import styled from 'styled-components';
 import decks from "./deckDePerguntas";
 import React, { useState } from 'react';
@@ -34,12 +33,8 @@ export default function ScreenContainer() {
                 zap={zap}
                 />
 
-                <div className="pergunta-aberta">
-                    <h1>O que é JSX?</h1>
-                    <img src={setaVirar} />
-                </div>
-
                 <ContainerBotoes 
+                decks={decks} 
                 perguntasClicadas={perguntasClicadas} 
                 naoLembradas={naoLembradas}
                 setNaoLembradas={setNaoLembradas}
@@ -53,10 +48,6 @@ export default function ScreenContainer() {
         </>
     )
 }
-
-
-
-
 
 const Container = styled.div`
 
@@ -94,34 +85,6 @@ const Container = styled.div`
     }
 
 
-    .pergunta-aberta {
-        background-color: #FFFFD4;
-        width: 300px;
-        margin: 12px;
-        padding: 15px;
-        min-height: 100px;
-        background: #FFFFD5;
-        box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.15);
-        border-radius: 5px;
-        font-family: 'Recursive';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 22px;
-        color: #333333;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
 
-        img {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-        }
-        ion-icon {
-            display: ${props => props.estaAberto? "inline": "none"};
-        }
-    }
 `;
 

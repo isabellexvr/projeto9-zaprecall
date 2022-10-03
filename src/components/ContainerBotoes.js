@@ -1,68 +1,73 @@
-import { useCallback, useState } from 'react';
 import styled from 'styled-components';
-
 import cores from '../coresBotoes.js'
 const { verde, amarelo, vermelho, cinza } = cores
 
 export default function ContainerBotoes
   ({
+    decks,
     perguntasClicadas,
     setNaoLembradas, naoLembradas,
     setQuaseNaoLembradas, quaseNaoLembradas,
     zap, setZap
   }) {
 
-
   function naoLembrei() {
 
     const aberta = perguntasClicadas[perguntasClicadas.length - 1]
-    if (aberta.status === "resultado") {
-      aberta.resultado = "nao-lembrei"
+
+    if (aberta.status !== "resposta") {
+      return
     }
 
+    aberta.resultado = "nao-lembrei"
     aberta.cor = vermelho
     aberta.icone = "close-circle"
+    aberta.status = "fechado"
 
     const newNaoLembradas = [...naoLembradas, aberta]
-    console.log(newNaoLembradas)
     setNaoLembradas(newNaoLembradas)
-
   }
 
   function quaseNaoLembrei() {
     const aberta = perguntasClicadas[perguntasClicadas.length - 1]
-    if (aberta.status === "resultado") {
-      aberta.resultado = "quase-nao-lembrei"
+
+    if (aberta.status !== "resposta") {
+      return
     }
 
+    aberta.resultado = "quase-nao-lembrei"
     aberta.cor = amarelo
     aberta.icone = "help-circle"
+    aberta.status = "fechado"
+
     const newQuaseNaoLembradas = [...quaseNaoLembradas, aberta]
-    console.log(newQuaseNaoLembradas)
     setQuaseNaoLembradas(newQuaseNaoLembradas)
   }
 
   function foiDeZap() {
     const aberta = perguntasClicadas[perguntasClicadas.length - 1]
-    if (aberta.status === "resultado") {
-      aberta.resultado = "zap"
+
+    if (aberta.status !== "resposta") {
+      return
     }
 
+    aberta.resultado = "zap"
     aberta.cor = verde
     aberta.icone = "checkmark-circle"
+    aberta.status = "fechado"
+
     const newZap = [...zap, aberta]
-    console.log(newZap)
     setZap(newZap)
   }
 
   return (
     <Footer>
       <Botoes >
-        <button onClick={naoLembrei} className="nao-lembrei">Não lembrei</button>
-        <button onClick={quaseNaoLembrei} className="quase-nao-lembrei">Quase não lembrei</button>
-        <button onClick={foiDeZap} className="zap">Zap!</button>
+        <button data-identifier="forgot-btn" onClick={naoLembrei} className="nao-lembrei">Não lembrei</button>
+        <button data-identifier="almost-forgot-btn" onClick={quaseNaoLembrei} className="quase-nao-lembrei">Quase não lembrei</button>
+        <button data-identifier="zap-btn" onClick={foiDeZap} className="zap">Zap!</button>
       </Botoes>
-      <h1>0/4 CONCLUÍDOS</h1>
+      <h1>{naoLembradas.length + quaseNaoLembradas.length + zap.length}/{decks.length} CONCLUÍDOS</h1>
     </Footer>
   )
 }
